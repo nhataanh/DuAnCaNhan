@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DemoWebNC.Models.LoaiSanPham>
+
+@{
+    ViewBag.Title = "Loại sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Index", "sChiTietDonHang", new { @strURL = Request.Url.ToString() }))
+{
+    <div class="container">
+        <p>
+            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+        </p>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TenLoaiSP)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TenLoaiSP)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.MaLoaiSP }, new { @class = "btn btn-warning" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.MaLoaiSP }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

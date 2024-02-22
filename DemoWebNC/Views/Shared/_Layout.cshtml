@@ -1,0 +1,236 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>@ViewBag.Title</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/assets/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="~/assets/font-awesome/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/assets/fonts/font-slider.css" type="text/css">
+
+    <!-- jQuery and Modernizr-->
+    <script src="~/assets/js/jquery-2.1.1.js"></script>
+
+    <!-- Core JavaScript Files -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+    <!--Top-->
+    <nav id="top" style="border-bottom-left-radius: 30px; border-bottom-right-radius: 30px; background: linear-gradient(to right, #1C1C1C, #E8E8E8); ">
+        <div class="container">
+            <div class="row">
+                @{
+                    var hoTen = Session["HoTen"];
+                    var MaKH = Session["MaKH"];
+                    if (Session["HoTen"] != null)
+                    {
+                        <div style="display:flex; justify-content:space-between;">
+                            <a href="@Url.Action("DangXuat","Account")" id="btnDangXuat" class="btn" style="color: white; background-color: rgb(25, 195, 125); border-radius: 20px; ">Đăng xuất</a>
+                            <label style="color: white;"><span class="glyphicon glyphicon-user"></span> @hoTen </label>
+                            <a href="@Url.Action("Index","LichSuDonHang",new { id = MaKH })" id="btnDangXuat" class="btn" style="color: white; background-color: rgb(25, 195, 125); border-radius: 20px; text-align: right;">Lịch sử mua hàng</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div style="display: flex;justify-content: center;">
+                            <a href="~/Account" style="color: white; "><span class="glyphicon glyphicon-user"></span> Đăng nhập</a>
+                        </div>
+
+                    }
+                }
+
+            </div>
+        </div>
+    </nav>
+    <!--Header-->
+    <header class="container">
+        <div class="row">
+            <div class="col-md-4 " style="justify-content: center; align-items: center; height: 15vh; display: flex;">
+                <img src="~/assets/images/logoLapTop.png" style="width: 300px; height: 150px;" />
+            </div>
+            <div class="col-md-4" style="justify-content: center; align-items: center; height: 15vh; display: flex;">
+                <div id="txtTimKiem" class="form-search">
+                    @using (Html.BeginForm("KetQuaTimKiem", "TimKiem", FormMethod.Post))
+                    {
+                        <div class="input-group" style="display: flex; ">
+                            @Html.TextBox("txtTimKiem", "", htmlAttributes: new { @class = "form-control input-medium search-query", @placeholder = "Nhập vào từ khóa cần tìm..." })
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-4" style="justify-content: center; align-items: center; height: 15vh; display: flex; ">
+                <div id="cart">
+                    <a class="btn btn-1" href="~/GioHang/GioHang">
+                        @*<span class="glyphicon glyphicon-shopping-cart"></span>CART : 0 ITEM*@
+                        @Html.Action("GioHangPartial", "GioHang")
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!--Navigation-->
+    <nav id="menu" class="navbar" style="border-radius: 30px;">
+        <div class="container">
+            <div class="navbar-header">
+                <span id="heading" class="visible-xs">Categories</span>
+                <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse"
+                        data-target=".navbar-ex1-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li class="dropdown">
+                        @Html.ActionLink("Products", "Index", "Category")
+                        <div class="dropdown-menu">
+                            <div class="dropdown-inner">
+                                <ul class="list-unstyled">
+                                    <li>@Html.ActionLink("SurFace", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "SurFace" }, null)</li>
+                                    <li>@Html.ActionLink("MacBook", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "MacBook" }, null)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Laptop cũ
+                        </a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-inner">
+                                <ul class="list-unstyled">
+                                    <li>@Html.ActionLink("Laptop Dell", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Dell" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop HP", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "HP" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop Lenovo", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Lenovo" }, null)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Laptop mới
+                        </a>
+                        <div class="dropdown-menu" style="margin-left: -203.625px;">
+                            <div class="dropdown-inner">
+                                <ul class="list-unstyled">
+                                    <li>@Html.ActionLink("Laptop Dell", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Dell" }, null)</li>
+                                    <li>@Html.ActionLink("Lenovo Thinkpad", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Lenovo Thinkpad" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop Asus", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Asus" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop Gigabyte", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Gigabyte" }, null)</li>
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>@Html.ActionLink("Laptop HP", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "HP" }, null)</li>
+                                    <li>@Html.ActionLink("Lenovo Razer", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Lenovo Razer" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop MSI", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "MSI" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop SamSung", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "SamSung" }, null)</li>
+                                </ul>
+                                <ul class="list-unstyled">
+                                    <li>@Html.ActionLink("Laptop Lenovo", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Lenovo" }, null)</li>
+                                    <li>@Html.ActionLink("Lenovo Acer", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "Lenovo Acer" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop LG", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "LG" }, null)</li>
+                                    <li>@Html.ActionLink("Laptop VAIO", "KetQuaTimKiem", "TimKiem", new { sTuKhoa = "VAIO" }, null)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!--//////////////////////////////////////////////////-->
+    <!--///////////////////HomePage///////////////////////-->
+    <!--//////////////////////////////////////////////////-->
+    @RenderBody()
+    <footer>
+        <div class="container">
+            <div class="wrap-footer">
+                <div class="row">
+                    <div class="col-md-3 col-footer footer-1">
+                        <img src="~/assets/images/logoLapTop.png" />
+                        <p>
+                            Chào mừng bạn đến với cửa hàng laptop online hàng đầu. Đánh thức tiềm năng vô tận của công nghệ.
+                        </p>
+                    </div>
+                    <div class="col-md-3 col-footer footer-2">
+                        <div class="heading">
+                            <h4>Customer Service</h4>
+                        </div>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Delivery Information</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-footer footer-3">
+                        <div class="heading">
+                            <h4>My Account</h4>
+                        </div>
+                        <ul>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Brands</a></li>
+                            <li><a href="#">Gift Vouchers</a></li>
+                            <li><a href="#">Specials</a></li>
+                            <li><a href="#">Site Map</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-footer footer-4">
+                        <div class="heading">
+                            <h4>Contact Us</h4>
+                        </div>
+                        <ul>
+                            <li><span class="glyphicon glyphicon-home"></span>California, United States 3000009</li>
+                            <li><span class="glyphicon glyphicon-earphone"></span>+91 8866888111</li>
+                            <li><span class="glyphicon glyphicon-envelope"></span>infor@yoursite.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="pull-right">
+                            <ul>
+                                <li><img src="~/assets/images/visa-curved-32px.png" /></li>
+                                <li><img src="~/assets/images/paypal-curved-32px.png" /></li>
+                                <li><img src="~/assets/images/discover-curved-32px.png" /></li>
+                                <li><img src="~/assets/images/maestro-curved-32px.png" /></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<DemoWebNC.Models.ChiTietDonHang>
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>Details</h2>
+@using (Html.BeginForm("Details", "sDonHang", new { @strURL = Request.Url.ToString() }))
+{
+    <div class="table-responsive" style="margin-bottom: 600px;">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.DonHang.NguoiDung.HoTen)</th>
+                    <th>@Html.DisplayNameFor(model => model.SanPham.TenSP)</th>
+                    <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
+                    <th>@Html.DisplayNameFor(model => model.DonGia)</th>
+                    <th>@Html.DisplayNameFor(model => model.DonHang.NgayDat)</th>
+                    <th>@Html.DisplayNameFor(model => model.DonHang.DaThanhToan)</th>
+                    <th>@Html.DisplayNameFor(model => model.DonHang.TinhTrangGiaoHang)</th>
+                    <th>@Html.DisplayNameFor(model => model.DonHang.NgayGiao)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.NguoiDung.HoTen)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SanPham.TenSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.NgayDat)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.DaThanhToan)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.TinhTrangGiaoHang)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.NgayGiao)</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.MaDonHang }, new { @class = "btn btn-warning" })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

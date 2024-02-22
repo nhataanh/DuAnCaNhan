@@ -1,0 +1,81 @@
+﻿@model DemoWebNC.Models.DonHang
+
+@{
+    ViewBag.Title = "Sửa đơn hàng";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.MaDonHang)
+
+        <div class="mb-3 row">
+            @Html.LabelFor(model => model.DaThanhToan, new { @class = "col-md-2 col-form-label" })
+
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DaThanhToan, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "1", Value = "1" },
+                    new SelectListItem { Text = "0", Value = "0" }
+                }, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DaThanhToan, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            @Html.LabelFor(model => model.TinhTrangGiaoHang, new { @class = "col-md-2 col-form-label" })
+
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.TinhTrangGiaoHang, new List<SelectListItem>
+                {
+                    new SelectListItem { Text = "1", Value = "1" },
+                    new SelectListItem { Text = "0", Value = "0" }
+                }, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TinhTrangGiaoHang, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            @Html.LabelFor(model => model.NgayDat, new { @class = "col-md-2 col-form-label" })
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NgayDat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NgayDat, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            @Html.LabelFor(model => model.NgayGiao, new { @class = "col-md-2 col-form-label" })
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NgayGiao, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NgayGiao, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            @Html.LabelFor(model => model.MaKH, "MaKH", new { @class = "col-md-2 col-form-label" })
+
+            <div class="col-md-10">
+                @Html.DropDownList("MaKH", null, new { @class = "form-select" })
+                @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <div class="col-md-2"></div>
+
+            <div class="col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+            </div>
+        </div>
+    </div>
+}
+
+

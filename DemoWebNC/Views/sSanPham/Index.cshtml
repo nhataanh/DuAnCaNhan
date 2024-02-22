@@ -1,0 +1,63 @@
+﻿@using DemoWebNC.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<DemoWebNC.Models.SanPham>
+
+
+@{
+    ViewBag.Title = "Sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Index", "sChiTietDonHang", new { @strURL = Request.Url.ToString() }))
+{
+<div class="container mt-4">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Giá bán</th>
+                <th scope="col">Mô tả</th>
+                <th scope="col">Ảnh</th>
+                <th scope="col">Ảnh 1</th>
+                <th scope="col">Ảnh 2</th>
+                <th scope="col">Ảnh 3</th>
+                <th scope="col">Ảnh 4</th>
+                <th scope="col">Ngày cập nhật</th>
+                <th scope="col">Số lượng tồn</th>
+                <th scope="col">Hãng</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var MoTaNgan = item.MoTa.Length > 100 ? item.MoTa.Substring(0, 100) + "..." : item.MoTa;
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                    <td>@Html.DisplayFor(modelItem => item.GiaBan)</td>
+                    <td>@Html.DisplayFor(modelItem => MoTaNgan)</td>
+                    <td><img src="@item.Anh" width="60" height="120" class="img-fluid" alt="Ảnh sản phẩm"></td>
+                    <td><img src="@item.Anh1" width="60" height="120" class="img-fluid" alt="Ảnh sản phẩm 1"></td>
+                    <td><img src="@item.Anh2" width="60" height="120" class="img-fluid" alt="Ảnh sản phẩm 2"></td>
+                    <td><img src="@item.Anh3" width="60" height="120" class="img-fluid" alt="Ảnh sản phẩm 3"></td>
+                    <td><img src="@item.Anh4" width="60" height="120" class="img-fluid" alt="Ảnh sản phẩm 4"></td>
+                    <td>@Html.DisplayFor(modelItem => item.NgayCapNhat)</td>
+                    <td>@Html.DisplayFor(modelItem => item.SoLuongTon)</td>
+                    <td>@Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoaiSP)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MaSP }, new { @class = "btn btn-info btn-sm" })
+                        @Html.ActionLink("Details", "Details", new { id = item.MaSP }, new { @class = "btn btn-primary btn-sm" })
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MaSP }, new { @class = "btn btn-danger btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="row justify-content-center">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page = page }))
+    </div>
+</div>
+    
+}
+

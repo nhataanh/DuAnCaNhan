@@ -1,0 +1,59 @@
+﻿@model IEnumerable<DemoWebNC.Models.ChiTietDonHang>
+@{
+    ViewBag.Title = "Lịch sử đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    @{
+        var groupedOrders = Model.GroupBy(item => item.MaDonHang).OrderByDescending(group => group.Key);
+    }
+    @foreach (var group in groupedOrders)
+    {
+        <div class="row">
+            <div class="product well">
+                @{
+                    decimal totalAmount = 0;
+                    DateTime? commonTime = null;
+                }
+                @foreach (var item in group)
+                {
+                    decimal giaBan = item.SanPham.GiaBan ?? 0;
+                    decimal soLuong = item.SoLuong ?? 0;
+                    totalAmount += giaBan * soLuong;
+                    commonTime = item.DonHang.NgayDat;
+
+                    <div class="col-md-3">
+                        <div class="image">
+                            <a href="@Url.Action("XemChiTiet", "Home", new { @masp = item.SanPham.MaSP, @malsp = item.SanPham.MaLoaiSP })"><img src="@item.SanPham.Anh " /></a>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="caption">
+                            <div class="info">
+                                <ul>
+                                    <li>ID: @item.SanPham.MaSP</li>
+                                </ul>
+                            </div>
+                            <div class="name"><h3><a href="@Url.Action("XemChiTiet", "Home", new { @masp = item.SanPham.MaSP, @malsp = item.SanPham.MaLoaiSP })">@item.SanPham.TenSP</a></h3></div>
+                            <div class="name"><h3>Hãng: @item.SanPham.LoaiSanPham.TenLoaiSP</h3></div>
+                            <div class="price">Giá: @string.Format("{0:0,0}", item.SanPham.GiaBan)<span style="text-decoration: underline; color: black;">đ</span></div>
+                            <label style="font-size: 20px;">Số lượng: @item.SoLuong</label>
+                            <hr>
+                            <a href="@Url.Action("XemChiTiet", "Home", new { @masp = item.SanPham.MaSP, @malsp = item.SanPham.MaLoaiSP })" class="btn btn-default pull-right">Xem chi tiết</a>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                }
+                <div class="info" style="border-top: 1px solid #333; margin-top: 10px;">
+                    <ul style="margin-left: 300px;display: flex; justify-content: space-between;">
+                        <li style="font-size: 22px"><label style="color:black; font-weight: bold;">Thành tiền: </label>  @string.Format("{0:0,0}", totalAmount) <span style="text-decoration: underline; color: black;">đ</span></li>
+                        <li><label for="datetimePicker">Ngày đặt hàng: @commonTime</label></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

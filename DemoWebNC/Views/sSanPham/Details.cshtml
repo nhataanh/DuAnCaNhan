@@ -1,0 +1,104 @@
+﻿@model DemoWebNC.Models.SanPham
+
+@{
+    ViewBag.Title = "Xem chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container">
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.TenSP)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.TenSP)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.GiaBan)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.GiaBan)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MoTa)
+        </dt>
+        <dd class="col-sm-9" style="white-space: pre-line;">
+            @Html.DisplayFor(model => model.MoTa)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Anh)
+        </dt>
+        <dd class="col-sm-9">
+            <div id="Anh">
+                <img src="@Model.Anh" class="img-fluid" width="80" height="80" />
+            </div>
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Anh1)
+        </dt>
+        <dd class="col-sm-9">
+            <div id="Anh">
+                <img src="@Model.Anh1" class="img-fluid" width="80" height="80" />
+            </div>
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Anh2)
+        </dt>
+        <dd class="col-sm-9">
+            <div id="Anh">
+                <img src="@Model.Anh2" class="img-fluid" width="80" height="80" />
+            </div>
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Anh3)
+        </dt>
+        <dd class="col-sm-9">
+            <div id="Anh">
+                <img src="@Model.Anh3" class="img-fluid" width="80" height="80" />
+            </div>
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Anh4)
+        </dt>
+        <dd class="col-sm-9">
+            <div id="Anh">
+                <img src="@Model.Anh4" class="img-fluid" width="80" height="80" />
+            </div>
+        </dd>
+
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NgayCapNhat)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.NgayCapNhat)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.SoLuongTon)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.SoLuongTon)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.LoaiSanPham.TenLoaiSP)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.LoaiSanPham.TenLoaiSP)
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MaSP }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+</p>
+

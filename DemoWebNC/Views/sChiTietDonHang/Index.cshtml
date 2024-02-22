@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DemoWebNC.Models.ChiTietDonHang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Index", "sChiTietDonHang", new { @strURL = Request.Url.ToString() })) { 
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SoLuong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonGia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonHang.MaDonHang)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SanPham.TenSP)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SoLuong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonGia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DonHang.MaDonHang)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SanPham.TenSP)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MaCTDH }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MaCTDH })
+                </td>
+            </tr>
+        }
+
+    </table>
+}

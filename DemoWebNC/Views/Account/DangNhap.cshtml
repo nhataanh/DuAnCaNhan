@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "DangNhap";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/assets/css/bootstrap.min.css" type="text/css">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="~/assets/css/style.css">
+
+
+<!-- Custom Fonts -->
+<link rel="stylesheet" href="~/assets/font-awesome/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="~/assets/fonts/font-slider.css" type="text/css">
+
+<!-- jQuery and Modernizr-->
+<script src="~/assets/js/jquery-2.1.1.js"></script>
+
+<!-- Core JavaScript Files -->
+<script src="~/assets/js/bootstrap.min.js"></script>
+<div class="container" style="background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); width: 600px; margin-top: 100px">
+    @using (Html.BeginForm())
+    {
+        <h2 style="display: flex; justify-content: center; color: #808080; "><span style="color: black;">LAPTOP </span>store </h2>
+        
+        <div class="form-horizontal">
+            <hr />
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBox("txtTaiKhoan", null, new { @class = "form-control", placeholder = "Nhập Tài khoản..." })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.Password("txtMatKhau", null, new { @class = "form-control", placeholder = "Nhập Mật khẩu..." })
+                </div>
+            </div>
+            <div>
+                <label style="color: red;">@ViewBag.ThongBao</label>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" id="btnSubmit" name="btnSubmit" class="btn btn-primary">Đăng Nhập</button>
+                    <a href="@Url.Action("DangKy")" class="btn btn-primary">Đăng ký</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+
