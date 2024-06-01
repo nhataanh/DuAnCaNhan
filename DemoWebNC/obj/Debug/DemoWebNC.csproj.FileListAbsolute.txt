@@ -165,3 +165,5 @@ C:\Users\Admin\source\repos\WebNC\DemoWebNC\obj\Debug\DemoWebNC.csproj.CoreCompi
 C:\Users\Admin\source\repos\WebNC\DemoWebNC\obj\Debug\DemoWebNC.csproj.CopyComplete
 C:\Users\Admin\source\repos\WebNC\DemoWebNC\obj\Debug\DemoWebNC.dll
 C:\Users\Admin\source\repos\WebNC\DemoWebNC\obj\Debug\DemoWebNC.pdb
+C:\Users\Admin\source\repos\WebNC\DemoWebNC\bin\PayPal.dll
+C:\Users\Admin\source\repos\WebNC\DemoWebNC\bin\PayPal.xml

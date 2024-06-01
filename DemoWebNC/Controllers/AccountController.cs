@@ -40,7 +40,7 @@ namespace DemoWebNC.Controllers
                     {
                         db.NguoiDungs.Add(kh);
                         db.SaveChanges();
-                        return RedirectToAction("DangNhap");
+                        TempData["ThongBaoDK"] = "Bạn đã đăng ký thành công!";
                     }
                 }
                 catch
@@ -58,35 +58,45 @@ namespace DemoWebNC.Controllers
 
         [HttpPost]
 
-        public ActionResult DangNhap(FormCollection f,string ReturnUrl)
+        public ActionResult DangNhap(FormCollection f, string ReturnUrl)
         {
             string TaiKhoans = f["txtTaiKhoan"].ToString();
             string MatKhaus = f.Get("txtMatKhau").ToString();
             NguoiDung kh = db.NguoiDungs.SingleOrDefault(n => n.TaiKhoan == TaiKhoans && n.MatKhau == MatKhaus);
-            if(db.NguoiDungs.SingleOrDefault(n => n.TaiKhoan == "Admin" && n.MatKhau == MatKhaus) != null)
+
+            if (kh != null)
             {
-                FormsAuthentication.SetAuthCookie(kh.TaiKhoan, false);
-                Session["TaiKhoan"] = kh;
-                if (ReturnUrl == null)
+                if (TaiKhoans == "Admin")
                 {
-                    return RedirectToAction("Index", "AdminPQ");
+                    FormsAuthentication.SetAuthCookie(kh.TaiKhoan, false);
+                    Session["TaiKhoan"] = kh;
+                    Session["HoTen"] = kh.HoTen;
+                    Session["MaKH"] = kh.MaKH;
+                    if (!string.IsNullOrEmpty(ReturnUrl))
+                    {
+                        return Redirect(ReturnUrl);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "AdminPQ");
+                    }
                 }
                 else
                 {
-                    return Redirect(ReturnUrl);
+                    FormsAuthentication.SetAuthCookie(kh.TaiKhoan, false);
+                    Session["TaiKhoan"] = kh;
+                    Session["HoTen"] = kh.HoTen;
+                    Session["MaKH"] = kh.MaKH;
+                    return RedirectToAction("Index", "Home");
                 }
             }
-            else if(db.NguoiDungs.SingleOrDefault(n => n.TaiKhoan == TaiKhoans && n.MatKhau == MatKhaus) != null)
+            else
             {
-                FormsAuthentication.SetAuthCookie(kh.TaiKhoan, false);
-                Session["TaiKhoan"] = kh;
-                Session["HoTen"] = kh.HoTen;
-                Session["MaKH"] = kh.MaKH;
-                return RedirectToAction("Index", "Home");
+                ViewBag.ThongBaoTK = "Tên tài khoản hoặc mật khẩu không đúng !";
+                return View(); // Trả về view để hiển thị thông báo lỗi
             }
-            ViewBag.ThongBao = "Tên tài khoản hoặc mật khẩu không đúng !";
-            return View();
         }
+
         [HttpGet]
         public ActionResult DangXuat()
         {

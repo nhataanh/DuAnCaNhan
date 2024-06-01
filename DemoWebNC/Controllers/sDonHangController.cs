@@ -6,11 +6,12 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DemoWebNC.App_Start;
 using DemoWebNC.Models;
 
 namespace DemoWebNC.Controllers
 {
-    [Authorize]
+    [AdminAuthorize]
     public class sDonHangController : Controller
     {
         private DemoWebNCEntities db = new DemoWebNCEntities();
@@ -28,11 +29,13 @@ namespace DemoWebNC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            
             List<ChiTietDonHang> chiTietDonHang = db.ChiTietDonHangs.Where(c => c.MaDonHang == id).ToList();
             if (chiTietDonHang == null || chiTietDonHang.Count == 0)
             {
                 return HttpNotFound();
             }
+            ViewBag.HoTenNguoiDung = chiTietDonHang.FirstOrDefault()?.DonHang?.NguoiDung?.HoTen;
             return View(chiTietDonHang);
         }
         // GET: DonHangs/Create

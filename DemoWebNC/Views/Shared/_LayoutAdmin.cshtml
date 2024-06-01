@@ -16,7 +16,7 @@
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
-                <a href="@Url.Action("DangXuat","Account")" id="btnDangXuat" class="btn" style="color: white; background-color: rgb(25, 195, 125); border-radius: 20px;">Đăng xuất</a>
+                <a href="javascript:void(0)" onclick="confirmLogout()" id="btnDangXuat" class="btn" style="color: white; background-color: rgb(25, 195, 125); border-radius: 20px;">Đăng xuất</a>
             </div>
         </form>
     </nav>
@@ -47,9 +47,9 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Thông tin đơn hàng
                         </a>
-                        <a class="nav-link" href="@Url.Action("Index","sChiTietDonHang")">
+                        <a class="nav-link" href="@Url.Action("Index","BaoCaoThongKe")">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                            Chi tiết đơn hàng
+                            Báo cáo thống kê
                         </a>
                     </div>
                 </div>
@@ -63,21 +63,30 @@
             @RenderBody()
         </div>
     </div>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="~/Admin/js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script>
+        function updateCurrentDateTime() {
+            var currentDate = new Date();
+            var formattedDate = currentDate.toLocaleString();
+            document.getElementById("currentDateTime").innerHTML = formattedDate;
+        }
+
+        setInterval(updateCurrentDateTime, 1000); // Cập nhật mỗi giây (1000 milliseconds)
+        updateCurrentDateTime(); // Cập nhật lần đầu khi trang được tải
+    </script>
+    <script>
+    function confirmLogout() {
+        if (confirm('Bạn có muốn đăng xuất không?')) {
+            window.location.href = '@Url.Action("DangXuat", "Account")'; // Chuyển hướng đến hành động đăng xuất nếu được xác nhận
+        }
+    }
+    </script>
+    @RenderSection("scripts", false)
 </body>
 </html>
-<script>
-    function updateCurrentDateTime() {
-        var currentDate = new Date();
-        var formattedDate = currentDate.toLocaleString();
-        document.getElementById("currentDateTime").innerHTML = formattedDate;
-    }
-
-    setInterval(updateCurrentDateTime, 1000); // Cập nhật mỗi giây (1000 milliseconds)
-    updateCurrentDateTime(); // Cập nhật lần đầu khi trang được tải
-</script>
 
 

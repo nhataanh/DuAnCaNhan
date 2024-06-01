@@ -1,20 +1,18 @@
 ﻿@model IEnumerable<DemoWebNC.Models.DonHang>
 
 @{
-    ViewBag.Title = "Đơn hàng";
+    ViewBag.Title = "Thông tin đơn hàng";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
-@using (Html.BeginForm("Index", "sChiTietDonHang", new { @strURL = Request.Url.ToString() }))
+@using (Html.BeginForm("Index", "sDonHang", new { @strURL = Request.Url.ToString() }))
 {
     <div class="table-responsive" style="margin-bottom: 600px;">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
+                    <th>@Html.DisplayNameFor(model => model.MaDonHang)</th>
                     <th>@Html.DisplayNameFor(model => model.NguoiDung.HoTen)</th>
-                    @*<th>@Html.DisplayNameFor(model => model.DaThanhToan)</th>
-                    <th>@Html.DisplayNameFor(model => model.TinhTrangGiaoHang)</th>*@
                     <th>@Html.DisplayNameFor(model => model.NgayDat)</th>
-                    @*<th>@Html.DisplayNameFor(model => model.NgayGiao)</th>*@
 
                 </tr>
             </thead>
@@ -22,17 +20,15 @@
                 @foreach (var item in Model)
                 {
                 <tr>
+                    <td>@Html.DisplayFor(modelItem => item.MaDonHang)</td>
                     <td>@Html.DisplayFor(modelItem => item.NguoiDung.HoTen)</td>
-                    @*<td>@Html.DisplayFor(modelItem => item.DaThanhToan)</td>
-                    <td>@Html.DisplayFor(modelItem => item.TinhTrangGiaoHang)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.NgayDat)</td>
-                    @*<td>@Html.DisplayFor(modelItem => item.NgayGiao)</td>*@
 
-                <td>
-                    @Html.ActionLink("Check", "Edit", new { id = item.MaDonHang }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.MaDonHang }, new { @class = "btn btn-danger" })
-                    @Html.ActionLink("Details", "Details", new { id = item.MaDonHang }, new { @class = "btn btn-danger" })
-                </td>
+                    <td>
+                        @Html.ActionLink("Kiểm tra", "Edit", new { id = item.MaDonHang }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.MaDonHang }, new { @class = "btn btn-danger" })
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.MaDonHang }, new { @class = "btn btn-danger" })
+                    </td>
                 </tr>
                 }
             </tbody>

@@ -19,6 +19,10 @@ namespace DemoWebNC.Models
         {
             get { return soluong * dongia; }
         }
+        public double thanhtienUSD
+        {
+            get { return soluong * Math.Round(dongia/ 24965,2); }
+        }
         public double TongTien
         {
             get

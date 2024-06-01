@@ -4,14 +4,17 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<div class="d-flex justify-content-center" style="margin-top: 10px;">
+    <h2 class="bg-primary text-white rounded-pill px-3 py-2">
+        Chi tiết thông tin đơn hàng của khách hàng: @ViewBag.HoTenNguoiDung
+    </h2>
+</div>
 @using (Html.BeginForm("Details", "sDonHang", new { @strURL = Request.Url.ToString() }))
 {
     <div class="table-responsive" style="margin-bottom: 600px;">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th>@Html.DisplayNameFor(model => model.DonHang.NguoiDung.HoTen)</th>
                     <th>@Html.DisplayNameFor(model => model.SanPham.TenSP)</th>
                     <th>@Html.DisplayNameFor(model => model.SoLuong)</th>
                     <th>@Html.DisplayNameFor(model => model.DonGia)</th>
@@ -25,7 +28,6 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@Html.DisplayFor(modelItem => item.DonHang.NguoiDung.HoTen)</td>
                         <td>@Html.DisplayFor(modelItem => item.SanPham.TenSP)</td>
                         <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
                         <td>@Html.DisplayFor(modelItem => item.DonGia)</td>
@@ -33,12 +35,14 @@
                         <td>@Html.DisplayFor(modelItem => item.DonHang.DaThanhToan)</td>
                         <td>@Html.DisplayFor(modelItem => item.DonHang.TinhTrangGiaoHang)</td>
                         <td>@Html.DisplayFor(modelItem => item.DonHang.NgayGiao)</td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.MaDonHang }, new { @class = "btn btn-warning" })
-                        </td>
                     </tr>
                 }
             </tbody>
+
         </table>
+        <div class="text-center">
+            @Html.ActionLink("Sửa", "Edit", new { id = Model.FirstOrDefault()?.MaDonHang }, new { @class = "btn btn-warning" })
+            @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
+        </div>
     </div>
 }

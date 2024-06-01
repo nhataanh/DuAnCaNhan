@@ -26,12 +26,17 @@ namespace DemoWebNC.Models
         public Nullable<int> DaThanhToan { get; set; }
         [Display(Name = "Tình trạng giao hàng ")]
         public Nullable<int> TinhTrangGiaoHang { get; set; }
+
         [Display(Name = "Ngày đặt ")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> NgayDat { get; set; }
+
         [Display(Name = "Ngày giao ")]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        //[DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public Nullable<System.DateTime> NgayGiao { get; set; }
+
         [Display(Name = "Tên khách hàng ")]
         public Nullable<int> MaKH { get; set; }
     

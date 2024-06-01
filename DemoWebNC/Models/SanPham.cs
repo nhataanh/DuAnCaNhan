@@ -50,12 +50,12 @@ namespace DemoWebNC.Models
         [Required(ErrorMessage = "{0} Không được để trống !")]
         public string Anh4 { get; set; }
         [Display(Name = "Ngày cập nhật ")]
-        [Required(ErrorMessage = "{0} Không được để trống !")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public Nullable<System.DateTime> NgayCapNhat { get; set; }
         [Display(Name = "Số lượng tồn ")]
         [Required(ErrorMessage = "{0} Không được để trống !")]
+        [Range(0, int.MaxValue, ErrorMessage = "Giá trị số lượng tồn phải là số nguyên dương.")]
         public Nullable<int> SoLuongTon { get; set; }
         [Display(Name = "Hãng ")]
         public Nullable<int> MaLoaiSP { get; set; }

@@ -8,7 +8,7 @@
 {
     <div class="container">
         <p>
-            @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary" })
         </p>
         <table class="table table-striped">
             <thead>
@@ -27,8 +27,8 @@
                             @Html.DisplayFor(modelItem => item.TenLoaiSP)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.MaLoaiSP }, new { @class = "btn btn-warning" }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.MaLoaiSP }, new { @class = "btn btn-danger" })
+                            @Html.ActionLink("Sửa", "Edit", new { id = item.MaLoaiSP }, new { @class = "btn btn-warning" }) |
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.MaLoaiSP }, new { @class = "btn btn-danger" })
                         </td>
                     </tr>
                 }

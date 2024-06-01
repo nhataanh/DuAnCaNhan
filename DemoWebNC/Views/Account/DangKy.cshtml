@@ -96,12 +96,26 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input id="btnSumit" type="submit" value="Đăng ký" class="btn btn-default" />
+                    <input id="btnSubmit" type="submit" value="Đăng ký" class="btn btn-default" onclick="DangKyThanhCong()" />
                 </div>
             </div>
+            @if (TempData["ThongBaoDK"] != null)
+            {
+                <script>
+                    // JavaScript function to display success message
+                    function DangKyThanhCong() {
+                        if (confirm('Bạn đã đăng ký thành công.')) {
+                            window.location.href = '@Url.Action("DangNhap", "Account")';
+                        }
+                    }
+                    // Call the function to display the success message
+                    DangKyThanhCong();
+                </script>
+            }
         </div>
     }
 </div>
+
 @{
 
 }

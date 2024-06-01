@@ -6,13 +6,14 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using DemoWebNC.App_Start;
 using DemoWebNC.Models;
 using PagedList;
 using PagedList.Mvc;
 
 namespace DemoWebNC.Controllers
 {
-    [Authorize]
+    [AdminAuthorize]
     public class sSanPhamController : Controller
     {
         private DemoWebNCEntities db = new DemoWebNCEntities();
@@ -22,7 +23,10 @@ namespace DemoWebNC.Controllers
         {
             int pageSize = 9;
             int pageNumber = (page ?? 1);
-            var lstSanPham = db.SanPhams.ToList().OrderBy(n => n.GiaBan).ToPagedList(pageNumber, pageSize);
+
+            // Sắp xếp danh sách sản phẩm theo ngày cập nhật mới nhất
+            var lstSanPham = db.SanPhams.OrderByDescending(n => n.NgayCapNhat).ToList().ToPagedList(pageNumber, pageSize);
+
             return View(lstSanPham);
         }
 
@@ -53,6 +57,9 @@ namespace DemoWebNC.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Cập nhật trường NgàyCapNhat về ngày hiện tại
+                sanPham.NgayCapNhat = DateTime.Now;
+
                 var f = Request.Files["Anh"];
                 if (f != null && f.ContentLength > 0)
                 {
@@ -60,6 +67,38 @@ namespace DemoWebNC.Controllers
                     string foder = Server.MapPath("/assets/images/") + fName;
                     f.SaveAs(foder);
                     sanPham.Anh = "/assets/images/" + fName;
+                }
+                var f1 = Request.Files["Anh1"];
+                if (f1 != null && f1.ContentLength > 0)
+                {
+                    string fName = f1.FileName;
+                    string foder = Server.MapPath("/assets/images/") + fName;
+                    f1.SaveAs(foder);
+                    sanPham.Anh1 = "/assets/images/" + fName;
+                }
+                var f2 = Request.Files["Anh2"];
+                if (f2 != null && f2.ContentLength > 0)
+                {
+                    string fName = f2.FileName;
+                    string foder = Server.MapPath("/assets/images/") + fName;
+                    f2.SaveAs(foder);
+                    sanPham.Anh2 = "/assets/images/" + fName;
+                }
+                var f3 = Request.Files["Anh3"];
+                if (f3 != null && f3.ContentLength > 0)
+                {
+                    string fName = f3.FileName;
+                    string foder = Server.MapPath("/assets/images/") + fName;
+                    f3.SaveAs(foder);
+                    sanPham.Anh3 = "/assets/images/" + fName;
+                }
+                var f4 = Request.Files["Anh4"];
+                if (f4 != null && f4.ContentLength > 0)
+                {
+                    string fName = f4.FileName;
+                    string foder = Server.MapPath("/assets/images/") + fName;
+                    f4.SaveAs(foder);
+                    sanPham.Anh4 = "/assets/images/" + fName;
                 }
                 db.SanPhams.Add(sanPham);
                 db.SaveChanges();
@@ -92,6 +131,9 @@ namespace DemoWebNC.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Cập nhật trường NgàyCapNhat về ngày hiện tại
+                sanPham.NgayCapNhat = DateTime.Now;
+
                 var f = Request.Files["Anh"];
                 if (f != null && f.ContentLength > 0)
                 {

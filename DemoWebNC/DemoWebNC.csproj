@@ -54,14 +54,17 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -129,6 +132,8 @@
     <Content Include="assets\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="assets\images\close.png" />
     <Content Include="assets\images\discover-curved-32px.png" />
+    <Content Include="assets\images\iconThanhCong.jpg" />
+    <Content Include="assets\images\iconTienMat.jfif" />
     <Content Include="assets\images\loading.gif" />
     <Content Include="assets\images\logo.png" />
     <Content Include="assets\images\logofooter.png" />
@@ -172,13 +177,15 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AdminAuthorize.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\CustomerAuthorize.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminPQController.cs" />
     <Compile Include="Controllers\LichSuDonHangController.cs" />
-    <Compile Include="Controllers\sChiTietDonHangController.cs" />
+    <Compile Include="Controllers\BaoCaoThongKeController.cs" />
     <Compile Include="Controllers\sDonHangController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -219,6 +226,7 @@
     <Compile Include="Models\NguoiDung.cs">
       <DependentUpon>DemoWebNCModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaypalConfiguration.cs" />
     <Compile Include="Models\SanPham.cs">
       <DependentUpon>DemoWebNCModel.tt</DependentUpon>
     </Compile>
@@ -299,10 +307,7 @@
     <Content Include="Views\sDonHang\Delete.cshtml" />
     <Content Include="Views\sDonHang\Edit.cshtml" />
     <Content Include="Views\sDonHang\Index.cshtml" />
-    <Content Include="Views\sChiTietDonHang\Delete.cshtml" />
-    <Content Include="Views\sChiTietDonHang\Details.cshtml" />
-    <Content Include="Views\sChiTietDonHang\Edit.cshtml" />
-    <Content Include="Views\sChiTietDonHang\Index.cshtml" />
+    <Content Include="Views\BaoCaoThongKe\Index.cshtml" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Views\TimKiem\KetQuaTimKiem.cshtml" />
@@ -310,6 +315,9 @@
     <Content Include="Views\AdminPQ\Index.cshtml" />
     <Content Include="Views\LichSuDonHang\Index.cshtml" />
     <Content Include="Views\sDonHang\Details.cshtml" />
+    <Content Include="Views\BaoCaoThongKe\SanPhamTon.cshtml" />
+    <Content Include="Views\GioHang\SuccessView.cshtml" />
+    <Content Include="Views\GioHang\FailureView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

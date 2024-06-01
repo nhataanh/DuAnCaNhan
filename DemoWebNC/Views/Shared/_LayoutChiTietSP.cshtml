@@ -11,7 +11,7 @@
                 <ul class="breadcrumb">
                     <li><a href="~/Home">Home</a></li>
                     <li><a href="~/Category">Category</a></li>
-                    <li><a href="#">Samsung Galaxy</a></li>
+                    <li>@Html.ActionLink(Model.TenSP, "KetQuaTimKiem", "TimKiem", new { sTuKhoa = Model.TenSP }, null)</li>
                 </ul>
             </div>
         </div>
@@ -24,19 +24,20 @@
                             <div class="image-more">
                                 <ul class="row">
                                     <li class="col-lg-3 col-sm-3 col-xs-4">
-                                        <a href="#"><img class="img-responsive" src="@Model.Anh1"></a>
+                                        <a href="@Model.Anh1" data-lightbox="gallery"><img class="img-responsive" src="@Model.Anh1"></a>
                                     </li>
                                     <li class="col-lg-3 col-sm-3 col-xs-4">
-                                        <a href="#"><img class="img-responsive" src="@Model.Anh2"></a>
+                                        <a href="@Model.Anh2" data-lightbox="gallery"><img class="img-responsive" src="@Model.Anh2"></a>
                                     </li>
                                     <li class="col-lg-3 col-sm-3 col-xs-4">
-                                        <a href="#"><img class="img-responsive" src="@Model.Anh3"></a>
+                                        <a href="@Model.Anh3" data-lightbox="gallery"><img class="img-responsive" src="@Model.Anh3"></a>
                                     </li>
                                     <li class="col-lg-3 col-sm-3 col-xs-4">
-                                        <a href="#"><img class="img-responsive" src="@Model.Anh4"></a>
+                                        <a href="@Model.Anh4" data-lightbox="gallery"><img class="img-responsive" src="@Model.Anh4"></a>
                                     </li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -49,11 +50,21 @@
                                 </ul>
                             </div>
                             <div class="price">@string.Format("{0:0,0}", Model.GiaBan) VND</div>
-                            <div class="rating"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></div>
+                            <div class="rating"><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star-empty" style="color: yellow;"></span></div>
                             <div class="well"><label>Số lượng tồn: @Model.SoLuongTon</label></div>
-                            @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = Model.MaSP, @strURL = Request.Url.ToString() }))
+                            @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = Model.MaSP, @strURL = Request.Url.ToString() }, FormMethod.Post, new { id = "addToCartForm" }))
                             {
-                                <input type="submit" style="cursor: pointer " value="Thêm vào giỏ hàng" class="btn btn-primary" id="btnGioHang">
+                                if (Model.SoLuongTon > 0)
+                                {
+                                    <input type="button" onclick="addToCart(@Model.MaSP)" style="cursor: pointer " value="Thêm vào giỏ hàng" class="btn btn-primary" id="btnGioHang">
+                                }
+                                else
+                                {
+                                    <input type="button" style="cursor: not-allowed " value="Thêm vào giỏ hàng" class="btn btn-primary" id="btnGioHang">
+                                    <div class="position-relative">
+                                        <span class="text-danger bg-dark p-2 rounded" style="position: absolute; right: 100px; bottom: 105px; z-index: 100;">Hết hàng !</span>
+                                    </div>
+                                }
                             }
                             <div class="share well" style=" margin-top: 20px">
                                 <strong style="margin-right: 13px;">Share :</strong>
@@ -95,14 +106,18 @@
                                         <div class="cart">
                                             @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = relatedProduct[i].MaSP, @strURL = Request.Url.ToString() }))
                                             {
-                                                <button type="submit" style="cursor: pointer; border: none; width: 40px; height: 35px; border-radius: 4px; " id="btnGioHang" class="glyphicon glyphicon-shopping-cart"></button>
+                                                if (relatedProduct[i].SoLuongTon > 0)
+                                                {
+                                                    <button type="submit" style="cursor: pointer; border: none; width: 40px; height: 35px; border-radius: 4px; " id="btnGioHang" class="glyphicon glyphicon-shopping-cart"></button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" style="cursor: not-allowed; border: none; width: 40px; height: 35px; border-radius: 4px; background-color: gray; color: white;" disabled><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                                    <div class="position-relative">
+                                                        <span class="text-danger bg-dark p-2 rounded" style="position: absolute; right: 20px; top: 20px; z-index: 100;">Hết hàng !</span>
+                                                    </div>
+                                                }
                                             }
-                                        </div>
-                                        <div class="buttons">
-                                            <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                            <a class="btn compare" href="#">
-                                                <span class="glyphicon glyphicon-transfer"></span>
-                                            </a>
                                         </div>
                                         <div class="caption">
                                             <div class="name">
@@ -123,27 +138,27 @@
                 </div>
             </div>
             <div id="sidebar" class="col-md-4">
-                <div class="widget wid-categories">
-                    <div class="heading"><h4>CATEGORIES</h4></div>
-                    <div class="content">
-                        <ul>
-                            <li><a href="#">PC Computers</a></li>
-                            <li><a href="#">Laptops & Notebooks</a></li>
-                            <li><a href="#">Mobiles & Tablet</a></li>
-                            <li><a href="#">Software</a></li>
-                        </ul>
-                    </div>
-                </div>
+                @*<div class="widget wid-categories">
+                        <div class="heading"><h4>CATEGORIES</h4></div>
+                        <div class="content">
+                            <ul>
+                                <li><a href="#">PC Computers</a></li>
+                                <li><a href="#">Laptops & Notebooks</a></li>
+                                <li><a href="#">Mobiles & Tablet</a></li>
+                                <li><a href="#">Software</a></li>
+                            </ul>
+                        </div>
+                    </div>*@
                 <div class="widget wid-product">
                     <div class="heading"><h4>LATEST</h4></div>
                     <div class="content">
                         <div class="products">
                             @{
-                                for (int i = 0; i < relatedProduct.Count && i <= 3; i++)
+                                for (int i = relatedProduct.Count - 1; i >= 0 && i >= relatedProduct.Count - 5; i--)
                                 {
-                                    <a href="@Url.Action("XemChiTiet", new { @masp = relatedProduct[i].MaSP,@malsp = relatedProduct[i].MaLoaiSP })"><img src="@relatedProduct[i].Anh" /></a>
+                                    <a href="@Url.Action("XemChiTiet", new { @masp = relatedProduct[i].MaSP,@malsp = relatedProduct[i].MaLoaiSP })" style="display: flex; justify-content: center;"><img src="@relatedProduct[i].Anh" style="width: 150px; height: 200px;" /></a>
                                     <div class="wrapper">
-                                        <h5><a href="@Url.Action("XemChiTiet", new { @masp = relatedProduct[i].MaSP,@malsp = relatedProduct[i].MaLoaiSP })">@relatedProduct[i].TenSP</a></h5>
+                                        <h5><a href="@Url.Action("XemChiTiet", new { @masp = relatedProduct[i].MaSP,@malsp = relatedProduct[i].MaLoaiSP })">@(relatedProduct[i].TenSP.Length > 20 ? relatedProduct[i].TenSP.Substring(0, 20) + "..." : relatedProduct[i].TenSP)</a></h5>
                                         <div class="price">@string.Format("{0:0,0}", relatedProduct[i].GiaBan) <span style="text-decoration: underline; color:black;"> đ</span></div>
                                         <div class="rating">
                                             <span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star" style="color: yellow;"></span><span class="glyphicon glyphicon-star-empty" style="color: yellow;"></span>
@@ -158,6 +173,26 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function addToCart(masp) {
+        $.ajax({
+            url: '@Url.Action("ThemGioHang", "GioHang")',
+            type: 'POST',
+            data: { masp: masp, strURL: '@Request.Url.ToString()' },
+            success: function (result) {
+                if (result.success) {
+                    // Hiển thị thông báo thành công
+                    alert('Thêm vào giỏ hàng thành công!');
+                    // Cập nhật số lượng sản phẩm trong giỏ hàng
+                    $('#itemCount').text(result.itemCount);
+                } else {
+                    // Hiển thị thông báo lỗi (nếu cần)
+                    alert('Đã xảy ra lỗi khi thêm vào giỏ hàng!');
+                }
+            }
+        });
+    }
+</script>
 @RenderBody()
 
 

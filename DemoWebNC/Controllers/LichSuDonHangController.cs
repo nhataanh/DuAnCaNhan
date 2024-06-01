@@ -27,7 +27,7 @@ namespace DemoWebNC.Controllers
             var lichsudonhangs = db.ChiTietDonHangs
                                     .Include(c => c.DonHang)
                                     .Include(c => c.SanPham)
-                                    .Where(c => c.DonHang.MaKH == id); // Lọc theo DonHangId
+                                    .Where(c => c.DonHang.MaKH == id); // Lọc theo madonhang
 
             // Trả về danh sách chi tiết đơn hàng cho view
             return View(lichsudonhangs.ToList());

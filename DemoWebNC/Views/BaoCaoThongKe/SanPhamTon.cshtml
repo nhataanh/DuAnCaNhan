@@ -1,0 +1,62 @@
+﻿@model IEnumerable<DemoWebNC.Models.SanPham>
+
+@{
+    ViewBag.Title = "Sản phẩm tồn";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Index", "BaoCaoThongke", FormMethod.Get, new { @strURL = Request.Url.ToString() }))
+{
+    <div class="container mt-4">
+        <div class="d-flex">
+            <form>
+                <input type="text" name="timKiem" class="form-control mr-2" placeholder="Search..." id="SearchTon">
+                <label class="btn btn-primary">Search</label>
+            </form>
+        </div>
+        <table class="table table-striped" id="TableTon">
+            <thead>
+                <tr>
+                    <th>Mã sản phẩm</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng tồn</th>
+                    <th>Ngày cập nhật</th>
+                    <th>Hãng sản phẩm</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.MaSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TenSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.GiaBan)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoLuongTon)</td>
+                        <td>@Html.DisplayFor(modelItem => item.NgayCapNhat)</td>
+                        <td>@Html.DisplayFor(modelItem => item.LoaiSanPham.TenLoaiSP)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+@section scripts{
+    <script>
+        $('#SearchTon').on('keyup', function (e) {
+            var text = $('#SearchTon').val().toLowerCase()
+
+            $("#TableTon tbody tr").each(function (index, row) {
+                $(row).children("td").each(function () {
+                    var ten = $(this).text().toLowerCase();
+                    if (ten.includes(text)) {
+                        $(this).parent().show();
+                        return false;
+                    }
+                    else {
+                        $(this).parent().hide();
+                    }
+                })
+            });
+        });
+    </script>
+}

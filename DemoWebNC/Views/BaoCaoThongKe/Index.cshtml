@@ -1,0 +1,97 @@
+﻿@model IEnumerable<DemoWebNC.Models.ChiTietDonHang>
+
+@{
+    ViewBag.Title = "Báo cáo thống kê";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@using (Html.BeginForm("Index", "BaoCaoThongke", FormMethod.Get, new { @strURL = Request.Url.ToString() }))
+{
+    <div class="container  mt-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                @Html.ActionLink("Sản phẩm tồn", "SanPhamTon", null, new { @class = "btn btn-primary" })
+            </div>
+            <div class="d-flex align-items-center">
+                <input type="month" name="month" class="form-control mx-2" id="SearchThang" />
+                <label class="btn btn-primary">Search</label>
+            </div>
+        </div>
+        <table class="table table-striped" id="DoanhThu">
+            <thead>
+                <tr>
+                    <th>Mã đơn hàng</th>
+                    <th>Tên khách hàng</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Số lượng</th>
+                    <th>Đơn giá</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    decimal tongTien = 0;
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.MaDonHang)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DonHang.NguoiDung.HoTen)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SanPham.TenSP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.SoLuong)</td>
+                        <td>
+                            @string.Format("{0:0,0}", item.DonGia)
+                            <span style="text-decoration: underline;">đ</span>
+                        </td>
+                        <td class="ThangDT">@Html.DisplayFor(modelItem => item.DonHang.NgayDat)</td>
+                        <td>
+                            @string.Format("{0:0,0}", item.SoLuong * item.DonGia)
+                            <span style="text-decoration: underline;">đ</span>
+                        </td>
+                    </tr>
+                    tongTien += (item.SoLuong * item.DonGia ?? 0);
+
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="6">Tổng tiền: </th>
+                    <th id="TotalRevenue">
+                        @string.Format("{0:0,0}", tongTien)
+                        <span style="text-decoration: underline;">đ</span>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#SearchThang').on('change', function () {
+                var selectedMonth = $(this).val();
+
+                var totalRevenue = 0; // Khởi tạo tổng doanh thu
+
+                $("#DoanhThu tbody tr").each(function () {
+                    var ngayDatHang = $(this).find(".ThangDT").text();
+                    var orderMonthYear = ngayDatHang.split('-').slice(0, 2).join('-'); // Lấy tháng và năm từ ngày đặt hàng
+
+                    if (orderMonthYear === selectedMonth) {
+                        $(this).show(); // Hiển thị dòng nếu đặt hàng trong tháng được chọn
+
+                        // Tính lại tổng doanh thu của tháng
+                        var soLuong = parseInt($(this).find("td:eq(3)").text());
+                        var donGia = parseFloat($(this).find("td:eq(4)").text().replace('đ', '').replace(',', ''));
+                        totalRevenue += soLuong * donGia;
+                    } else {
+                        $(this).hide(); // Ẩn dòng nếu không đặt hàng trong tháng được chọn
+                    }
+                });
+
+                // Hiển thị tổng doanh thu của tháng
+                $('#TotalRevenue').text(totalRevenue.toLocaleString() + "đ");
+            });
+        });
+    </script>
+}

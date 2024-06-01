@@ -1,14 +1,19 @@
 ﻿@model DemoWebNC.Models.DonHang
 
 @{
-    ViewBag.Title = "Sửa đơn hàng";
+    ViewBag.Title = "Sửa thông tin đơn hàng";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    <div class="d-flex justify-content-center" style="margin-top: 10px;">
+        <h2 class="bg-primary text-white rounded-pill px-3 py-2">
+            Cập nhật thông tin đơn hàng của khách hàng: @Model.NguoiDung.HoTen
+        </h2>
+    </div>
     <div class="container">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -20,8 +25,8 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.DaThanhToan, new List<SelectListItem>
                 {
-                    new SelectListItem { Text = "1", Value = "1" },
-                    new SelectListItem { Text = "0", Value = "0" }
+                    new SelectListItem { Text = "Đã thanh toán", Value = "1" },
+                    new SelectListItem { Text = "Chưa thanh toán", Value = "0" }
                 }, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.DaThanhToan, "", new { @class = "text-danger" })
             </div>
@@ -33,8 +38,8 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.TinhTrangGiaoHang, new List<SelectListItem>
                 {
-                    new SelectListItem { Text = "1", Value = "1" },
-                    new SelectListItem { Text = "0", Value = "0" }
+                    new SelectListItem { Text = "Đã giao hàng", Value = "1" },
+                    new SelectListItem { Text = "Chưa giao hàng", Value = "0" }
                 }, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.TinhTrangGiaoHang, "", new { @class = "text-danger" })
             </div>
@@ -44,7 +49,7 @@
             @Html.LabelFor(model => model.NgayDat, new { @class = "col-md-2 col-form-label" })
 
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NgayDat, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.NgayDat, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.NgayDat, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -59,20 +64,22 @@
         </div>
 
         <div class="mb-3 row">
-            @Html.LabelFor(model => model.MaKH, "MaKH", new { @class = "col-md-2 col-form-label" })
+            @Html.LabelFor(model => model.MaKH, "Tên khách hàng", new { @class = "col-md-2 col-form-label" })
 
             <div class="col-md-10">
-                @Html.DropDownList("MaKH", null, new { @class = "form-select" })
+                @Html.DropDownList("MaKH", null, new { @class = "form-select", @disabled = "disabled" })
+                @Html.HiddenFor(model => model.MaKH)
                 @Html.ValidationMessageFor(model => model.MaKH, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="mb-3 row">
             <div class="col-md-2"></div>
 
             <div class="col-md-10">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-secondary" })
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại", "Index", null, new { @class = "btn btn-secondary" })
             </div>
         </div>
     </div>

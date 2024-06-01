@@ -72,7 +72,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="heading">
-                    <h2>SPECIAL PRODUCTS</h2>
+                    <h2>SẢN PHẨM ĐẶC BIỆT</h2>
                 </div>
                 <div class="products">
                     @{
@@ -85,16 +85,21 @@
                                     <div class="product">
                                         <div class="image" style=" height: 250px; background-color: #ffffff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);padding: 50px;  "><a href="@Url.Action("XemChiTiet",new { @masp = item.MaSP,@malsp = item.MaLoaiSP})"><img src="@item.Anh" /></a></div>
                                         <div class="cart">
-                                            @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = item.MaSP, @strURL = Request.Url.ToString() }))
+                                            @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = item.MaSP, @strURL = Request.Url.ToString() }, FormMethod.Post, new { id = "addToCartForm" }))
                                             {
-                                                <button type="submit" style="cursor: pointer; border: none; width: 40px; height: 35px; border-radius: 4px; " id="btnGioHang" class="glyphicon glyphicon-shopping-cart"></button>
+                                                // Kiểm tra số lượng tồn trước khi thêm vào giỏ hàng
+                                                if (item.SoLuongTon > 0)
+                                                {
+                                                    <button type="button" onclick="addToCart(@item.MaSP)" style="cursor: pointer; border: none; width: 40px; height: 35px; border-radius: 4px; " id="btnGioHang" class="glyphicon glyphicon-shopping-cart"></button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" style="cursor: not-allowed; border: none; width: 40px; height: 35px; border-radius: 4px; background-color: gray; color: white;" disabled><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                                    <div class="position-relative">
+                                                        <span class="text-danger bg-dark p-2 rounded" style="position: absolute; right: 20px; top: 20px; z-index: 100;">Hết hàng !</span>
+                                                    </div>
+                                                }
                                             }
-                                        </div>
-                                        <div class="buttons">
-                                            <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                            <a class="btn compare" href="#">
-                                                <span class="glyphicon glyphicon-transfer"></span>
-                                            </a>
                                         </div>
                                         <div class="caption">
                                             <div class="name">
@@ -135,7 +140,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="heading">
-                    <h2>FEATURED PRODUCTS</h2>
+                    <h2>SẢN PHẨM TIÊU BIỂU</h2>
                 </div>
                 <div class="products">
                     @{
@@ -149,17 +154,26 @@
                                     <div class="product">
                                         <div class="image" style=" height: 250px; background-color: #ffffff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);padding: 50px; "><a href="@Url.Action("XemChiTiet",new { @masp = item.MaSP,@malsp = item.MaLoaiSP})"><img src="@item.Anh" /></a></div>
                                         <div class="cart">
-                                            @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = item.MaSP, @strURL = Request.Url.ToString() }))
+                                            @using (Html.BeginForm("ThemGioHang", "GioHang", new { @masp = item.MaSP, @strURL = Request.Url.ToString() }, FormMethod.Post, new { id = "addToCartForm" }))
                                             {
-                                                <button type="submit" style="cursor: pointer; border: none; width: 40px; height: 35px; border-radius: 4px; " id="btnGioHang" class="glyphicon glyphicon-shopping-cart"></button>
+                                                // Kiểm tra số lượng tồn trước khi thêm vào giỏ hàng
+                                                if (item.SoLuongTon > 0)
+                                                {
+                                                    <button type="button" onclick="addToCart(@item.MaSP)" style="cursor: pointer; border: none; width: 40px; height: 35px; border-radius: 4px; " id="btnGioHang" class="glyphicon glyphicon-shopping-cart"></button>
+                                                }
+                                                else
+                                                {
+                                                    <button type="button" style="cursor: not-allowed; border: none; width: 40px; height: 35px; border-radius: 4px; background-color: gray; color: white;" disabled><span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                                    <div class="position-relative">
+                                                        <span class="text-danger bg-dark p-2 rounded" style="position: absolute; right: 20px; top: 20px; z-index: 100;">Hết hàng !</span>
+                                                    </div>
+                                                }
                                             }
                                         </div>
-                                        <div class="buttons">
-                                            <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
-                                            <a class="btn compare" href="#">
-                                                <span class="glyphicon glyphicon-transfer"></span>
-                                            </a>
-                                        </div>
+                                        @*<div class="buttons">
+                                                <a class="btn wishlist" href="#"><span class="glyphicon glyphicon-heart"></span></a>
+                                                <a class="btn compare" href="#"><span class="glyphicon glyphicon-transfer"></span></a>
+                                            </div>*@
                                         <div class="caption">
                                             <div class="name">
                                                 <h3><a href="@Url.Action("XemChiTiet",new { @masp = item.MaSP,@malsp = item.MaLoaiSP})">@(item.TenSP.Length > 20 ? item.TenSP.Substring(0, 20) + "..." : item.TenSP)</a></h3>
@@ -175,12 +189,35 @@
                             }
                             else
                             {
-                                break; 
+                                break;
                             }
                         }
+
                     }
                 </div>
             </div>
         </div>
     </div>
 </div>
+@section scripts{
+    <script type="text/javascript">
+    function addToCart(masp) {
+        $.ajax({
+            url: '@Url.Action("ThemGioHang", "GioHang")',
+            type: 'POST',
+            data: { masp: masp, strURL: '@Request.Url.ToString()' },
+            success: function (result) {
+                if (result.success) {
+                    // Hiển thị thông báo thành công
+                    alert('Thêm vào giỏ hàng thành công!');
+                    // Cập nhật số lượng sản phẩm trong giỏ hàng
+                    $('#itemCount').text(result.itemCount);
+                } else {
+                    // Hiển thị thông báo lỗi (nếu cần)
+                    alert('Đã xảy ra lỗi khi thêm vào giỏ hàng!');
+                }
+            }
+        });
+    }
+    </script>
+}
